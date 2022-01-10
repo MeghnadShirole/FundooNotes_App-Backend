@@ -1,6 +1,9 @@
 import User from '../models/user.model.js';
+import bcrypt from 'bcrypt';
 
 export const registration = async(userData) => {
+    let saltRounds = 10;
+    userData.password = bcrypt.hashSync(userData.password, saltRounds);
     var newUser = new User({
         "firstname": userData.firstname,
         "lastname": userData.lastname,
