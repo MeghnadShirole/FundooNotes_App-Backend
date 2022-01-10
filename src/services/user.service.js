@@ -1,5 +1,6 @@
-import User from '../models/user.model.js';
+import User from '../models/user.model';
 import bcrypt from 'bcrypt';
+import * as utils from '../utils/user.util';
 
 export const registration = async(userData) => {
     let saltRounds = 10;
@@ -15,3 +16,23 @@ export const registration = async(userData) => {
         throw err
     return result;
 };
+
+export const login = (userData, callback) => {
+    User.findOne({
+        "email": userData.email
+    }, (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else if (result != null) {
+            const validPassword = bcrypt.compareSync(userData.password, result.password);
+            if (validPassword == true) {
+                const loginToken = utils.generateToken(userData);
+                callback(null, loginToken);
+            } else {
+                callback("Incorrect password")
+            }
+        } else {
+            callback("Invalid user");
+        }
+    });
+}
