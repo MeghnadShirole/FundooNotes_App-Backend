@@ -26,7 +26,7 @@ export const login = (userData, callback) => {
         } else if (result != null) {
             const validPassword = bcrypt.compareSync(userData.password, result.password);
             if (validPassword == true) {
-                const loginToken = utils.generateToken(userData);
+                const loginToken = utils.generateToken(result);
                 callback(null, loginToken);
             } else {
                 callback("Incorrect password")
