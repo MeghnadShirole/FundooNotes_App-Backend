@@ -1,4 +1,4 @@
-import Note from '../models/note.model.js';
+import Note from '../models/note.model';
 
 export const newNote = async(noteData) => {
     var newNote = new Note({

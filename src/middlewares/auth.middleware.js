@@ -22,7 +22,7 @@ export const userAuth = (req, res, next) => {
                 });
             } else {
                 req.userData = decode;
-                req.body['userId'] = decode._id;
+                req.body['userId'] = decode.id;
                 next();
             }
         });

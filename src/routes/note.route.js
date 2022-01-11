@@ -1,8 +1,10 @@
 import express from 'express';
-import * as noteController from '../controllers/note.controller.js';
-import { newNoteValidator } from '../validators/note.validator.js';
-import { userAuth } from '../middlewares/auth.middleware.js';
+import * as noteController from '../controllers/note.controller';
+import { newNoteValidator } from '../validators/note.validator';
+import { userAuth } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
-router.post('/createNote', userAuth, newNoteValidator, noteController.newNote)
+router.post('/createNote', newNoteValidator, userAuth, noteController.newNote)
+
+export default router;

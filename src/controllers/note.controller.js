@@ -1,5 +1,5 @@
 import HttpStatus from 'http-status-codes';
-import * as noteService from '../services/note.service.js';
+import * as noteService from '../services/note.service';
 
 /**
  * Controller to create a new note
@@ -11,6 +11,7 @@ import * as noteService from '../services/note.service.js';
 export const newNote = async(req, res, next) => {
     try {
         const data = await noteService.newNote(req.body);
+        console.log(req.body);
         res.status(HttpStatus.CREATED).json({
             code: HttpStatus.CREATED,
             data: data,
