@@ -58,3 +58,19 @@ export const archieveNote = async(_id, noteData) => {
     }
     return data;
 }
+
+//trash a note
+export const trashNote = async(_id, noteData) => {
+    const data = await Note.findByIdAndUpdate({
+        _id
+    }, {
+        $set: {
+            isDeleted: true,
+            isArchieved: false
+        },
+    });
+    noteData, {
+        new: true,
+    }
+    return data;
+}

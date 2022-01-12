@@ -20,4 +20,7 @@ router.put('/update/:_id', userAuth, noteController.updateNote);
 //route to archieve a single note by their note id
 router.put('/archieve/:_id', userAuth, noteController.archieveNote);
 
+//route to trash a single note by their note id
+router.put('/trash/:_id', userAuth, noteController.trashNote);
+
 export default router;
