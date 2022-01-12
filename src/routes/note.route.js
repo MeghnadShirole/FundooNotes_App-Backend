@@ -29,4 +29,6 @@ router.delete('/delete/:_id', userAuth, noteController.deleteNote);
 //route to get all archieved notes
 router.get('/archievedNotes', userAuth, noteController.getArchievedNotes);
 
+//route to get all trashed notes
+router.get('/trashedNotes', userAuth, noteController.getTrashedNotes);
 export default router;

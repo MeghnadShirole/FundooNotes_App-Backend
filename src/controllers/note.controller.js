@@ -161,3 +161,23 @@ export const getArchievedNotes = async(req, res, next) => {
         next(error);
     }
 };
+
+/**
+ * Controller to get all trashed note
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+
+export const getTrashedNotes = async(req, res, next) => {
+    try {
+        const data = await noteService.getTrashedNotes(req.body);
+        res.status(HttpStatus.OK).json({
+            code: HttpStatus.OK,
+            data: data,
+            message: 'Trashed notes fetched successfully'
+        });
+    } catch (error) {
+        next(error);
+    }
+};

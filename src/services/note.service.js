@@ -91,3 +91,14 @@ export const getArchievedNotes = async(noteData) => {
         return data;
     }
 }
+
+//get all trashed notes
+export const getTrashedNotes = async(noteData) => {
+    const data = await Note.find({
+        userId: noteData.userId,
+        isDeleted: true
+    });
+    if (data) {
+        return data;
+    }
+}
