@@ -142,3 +142,22 @@ export const deleteNote = async(req, res, next) => {
         next(error);
     }
 };
+
+/**
+ * Controller to get all archieved note
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const getArchievedNotes = async(req, res, next) => {
+    try {
+        const data = await noteService.getArchievedNotes(req.body);
+        res.status(HttpStatus.OK).json({
+            code: HttpStatus.OK,
+            data: data,
+            message: 'Archieved notes fetched successfully'
+        });
+    } catch (error) {
+        next(error);
+    }
+};

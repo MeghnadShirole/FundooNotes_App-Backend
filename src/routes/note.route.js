@@ -26,4 +26,7 @@ router.put('/trash/:_id', userAuth, noteController.trashNote);
 //route to delete a single note by their note id
 router.delete('/delete/:_id', userAuth, noteController.deleteNote);
 
+//route to get all archieved notes
+router.get('/archievedNotes', userAuth, noteController.getArchievedNotes);
+
 export default router;

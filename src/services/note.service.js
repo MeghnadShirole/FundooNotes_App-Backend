@@ -80,3 +80,14 @@ export const deleteNote = async(id) => {
     await Note.findByIdAndDelete(id);
     return '';
 };
+
+//get all archieved notes
+export const getArchievedNotes = async(noteData) => {
+    const data = await Note.find({
+        userId: noteData.userId,
+        isArchieved: true
+    });
+    if (data) {
+        return data;
+    }
+}
