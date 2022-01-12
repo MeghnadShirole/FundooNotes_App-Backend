@@ -61,3 +61,24 @@ export const getNote = async(req, res, next) => {
         next(error);
     }
 };
+
+
+/**
+ * Controller to update a single note
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+
+export const updateNote = async(req, res, next) => {
+    try {
+        const data = await noteService.updateNote(req.params._id, req.body);
+        res.status(HttpStatus.ACCEPTED).json({
+            code: HttpStatus.ACCEPTED,
+            data: data,
+            message: 'note updated successfully'
+        });
+    } catch (error) {
+        next(error);
+    }
+};

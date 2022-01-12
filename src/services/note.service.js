@@ -31,3 +31,15 @@ export const getNote = async(_id) => {
     const data = await Note.findById({ _id });
     return data;
 };
+
+//update note
+export const updateNote = async(_id, notedata) => {
+    const data = await Note.findByIdAndUpdate({
+            _id
+        },
+        notedata, {
+            new: true
+        }
+    );
+    return data;
+};
