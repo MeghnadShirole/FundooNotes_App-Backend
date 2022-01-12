@@ -122,3 +122,23 @@ export const trashNote = async(req, res, next) => {
         next(error);
     }
 };
+
+/**
+ * Controller to delete a single note
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+
+export const deleteNote = async(req, res, next) => {
+    try {
+        await noteService.deleteNote(req.params._id);
+        res.status(HttpStatus.OK).json({
+            code: HttpStatus.OK,
+            data: [],
+            message: 'note deleted successfully'
+        });
+    } catch (error) {
+        next(error);
+    }
+};

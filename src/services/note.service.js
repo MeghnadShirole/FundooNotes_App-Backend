@@ -74,3 +74,9 @@ export const trashNote = async(_id, noteData) => {
     }
     return data;
 }
+
+//delete a note
+export const deleteNote = async(id) => {
+    await Note.findByIdAndDelete(id);
+    return '';
+};
