@@ -1,5 +1,6 @@
 import Note from '../models/note.model';
 
+//create note
 export const newNote = async(noteData) => {
     var newNote = new Note({
         "title": noteData.title,
@@ -11,4 +12,16 @@ export const newNote = async(noteData) => {
     })
     const result = await newNote.save(noteData);
     return result;
+}
+
+//get all notes
+export const getAllNotes = async(noteData) => {
+    const data = await Note.find({
+        userId: noteData.userId,
+        isArchieved: false,
+        isDeleted: false
+    });
+    if (data) {
+        return data;
+    }
 }
