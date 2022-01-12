@@ -43,3 +43,18 @@ export const updateNote = async(_id, notedata) => {
     );
     return data;
 };
+
+//archieve a note
+export const archieveNote = async(_id, noteData) => {
+    const data = await Note.findByIdAndUpdate({
+        _id
+    }, {
+        $set: {
+            isArchieved: true
+        },
+    });
+    noteData, {
+        new: true,
+    }
+    return data;
+}

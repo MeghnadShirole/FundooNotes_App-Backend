@@ -82,3 +82,23 @@ export const updateNote = async(req, res, next) => {
         next(error);
     }
 };
+
+/**
+ * Controller to archieve a single note
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+
+export const archieveNote = async(req, res, next) => {
+    try {
+        await noteService.archieveNote(req.params._id, req.body);
+        res.status(HttpStatus.ACCEPTED).json({
+            code: HttpStatus.ACCEPTED,
+            data: [],
+            message: 'note archieved successfully'
+        });
+    } catch (error) {
+        next(error);
+    }
+};

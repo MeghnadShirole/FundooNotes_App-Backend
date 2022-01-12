@@ -17,4 +17,7 @@ router.get('/getNote/:_id', userAuth, noteController.getNote);
 //route to update a single note by their note id
 router.put('/update/:_id', userAuth, noteController.updateNote);
 
+//route to archieve a single note by their note id
+router.put('/archieve/:_id', userAuth, noteController.archieveNote);
+
 export default router;
