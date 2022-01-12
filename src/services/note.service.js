@@ -25,3 +25,9 @@ export const getAllNotes = async(noteData) => {
         return data;
     }
 }
+
+//get single note
+export const getNote = async(_id) => {
+    const data = await Note.findById({ _id });
+    return data;
+};

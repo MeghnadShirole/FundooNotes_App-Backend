@@ -11,4 +11,6 @@ router.post('/createNote', newNoteValidator, userAuth, noteController.newNote)
 //route to get all notes
 router.get('/getAllNotes', userAuth, noteController.getAllNotes);
 
+//route to get a single note by their note id
+router.get('/getNote/:_id', userAuth, noteController.getNote);
 export default router;
