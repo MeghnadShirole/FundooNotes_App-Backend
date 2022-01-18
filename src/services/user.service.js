@@ -1,22 +1,26 @@
 import User from '../models/user.model';
+import * as utils from '../Utils/utils';
 import bcrypt from 'bcrypt';
-import * as utils from '../utils/user.util';
+import * as sendMail from '../middlewares/nodemailer.middleware'
 
-export const registration = async(userData) => {
-    let saltRounds = 10;
-    userData.password = bcrypt.hashSync(userData.password, saltRounds);
+
+//User Registration
+export const registration = (userData) => {
+    const password = utils.hashPassword(userData);
     var newUser = new User({
         "firstname": userData.firstname,
         "lastname": userData.lastname,
         "email": userData.email,
-        "password": userData.password,
+        "password": password,
     })
-    const result = await newUser.save(userData);
+    const result = newUser.save(userData);
     if (!result)
         throw err
     return result;
 };
 
+
+//User Login
 export const login = (userData, callback) => {
     User.findOne({
         "email": userData.email
@@ -53,9 +57,26 @@ export const forgetPassword = async(userData, callback) => {
 
             const url = `${host}:${port}/api/${api_version}/users/resetPassword/${forgetPasswordToken}`;
             const mail = sendMail.sendEMail(url, userData.email);
-            callback(null, mail)
+            return mail;
+
         } else {
             callback("Invalid user");
         }
     });
 }
+
+//Reset Password
+export const resetPassword = async(_id, userData) => {
+    const password = utils.hashPassword(userData);
+    const data = await User.findByIdAndUpdate({
+        _id: _id.userId
+    }, {
+        $set: {
+            password: password
+        },
+    });
+    userData, {
+        new: true
+    }
+    return data;
+};
