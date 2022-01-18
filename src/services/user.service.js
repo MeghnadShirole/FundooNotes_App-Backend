@@ -36,3 +36,26 @@ export const login = (userData, callback) => {
         }
     });
 }
+
+//Forget Password
+export const forgetPassword = async(userData, callback) => {
+    User.findOne({
+        "email": userData.email
+    }, (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else if (result != null) {
+            const forgetPasswordToken = utils.forgetPasswordToken(result);
+
+            const port = process.env.APP_PORT;
+            const host = process.env.APP_HOST;
+            const api_version = process.env.API_VERSION;
+
+            const url = `${host}:${port}/api/${api_version}/users/resetPassword/${forgetPasswordToken}`;
+            const mail = sendMail.sendEMail(url, userData.email);
+            callback(null, mail)
+        } else {
+            callback("Invalid user");
+        }
+    });
+}
