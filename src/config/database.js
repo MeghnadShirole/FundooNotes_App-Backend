@@ -3,7 +3,10 @@ import logger from './logger';
 
 const database = async() => {
     try {
-        const DATABASE = process.env.DATABASE;
+        const DATABASE =
+            process.env.NODE_ENV === 'test' ?
+            process.env.DATABASE_TEST :
+            process.env.DATABASE;
 
         await mongoose.connect(DATABASE, {
             useFindAndModify: false,
