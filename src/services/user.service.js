@@ -2,7 +2,7 @@ import User from '../models/user.model';
 import * as utils from '../Utils/user.util';
 import bcrypt from 'bcrypt';
 import * as sendMail from '../middlewares/nodemailer.middleware'
-
+import * as rabbitmq from '../Utils/rabbitmq';
 
 //User Registration
 export const registration = (userData) => {
@@ -13,12 +13,15 @@ export const registration = (userData) => {
         "email": userData.email,
         "password": password,
     })
-    const result = newUser.save(userData);
-    if (!result)
+    const result = await newUser.save(userData);
+    if (!result) {
         throw err
-    return result;
+    } else {
+        rabbitmq.sender(result);
+        rabbitmq.reciever();
+        return result;
+    }
 };
-
 
 //User Login
 export const login = (userData, callback) => {
