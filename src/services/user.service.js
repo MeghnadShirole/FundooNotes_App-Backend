@@ -1,5 +1,5 @@
 import User from '../models/user.model';
-import * as utils from '../Utils/utils';
+import * as utils from '../Utils/user.util';
 import bcrypt from 'bcrypt';
 import * as sendMail from '../middlewares/nodemailer.middleware'
 
@@ -57,7 +57,7 @@ export const forgetPassword = async(userData, callback) => {
 
             const url = `${host}:${port}/api/${api_version}/users/resetPassword/${forgetPasswordToken}`;
             const mail = sendMail.sendEMail(url, userData.email);
-            return mail;
+            return `${forgetPasswordToken}`;
 
         } else {
             callback("Invalid user");
