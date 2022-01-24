@@ -2,6 +2,7 @@ import express from 'express';
 import * as noteController from '../controllers/note.controller';
 import { newNoteValidator } from '../validators/note.validator';
 import { userAuth } from '../middlewares/auth.middleware';
+import * as redis from '../middlewares/redis.middleware';
 
 const router = express.Router();
 

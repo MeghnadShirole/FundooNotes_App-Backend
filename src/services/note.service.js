@@ -1,17 +1,21 @@
 import Note from '../models/note.model';
+import { client } from '../config/redis';
 
-//create note
+//create a new note
 export const newNote = async(noteData) => {
     var newNote = new Note({
         "title": noteData.title,
         "content": noteData.content,
         "color": noteData.color,
-        "isArchieved": noteData.isArchieved,
-        "isDeleted": noteData.isDeleted,
+        "isArchieved": false,
+        "isDeleted": false,
         "userId": noteData.userId
     })
-    const result = await newNote.save(noteData);
-    return result;
+    const data = await newNote.save(noteData);
+    if (data) {
+        await client.del('allNotes');
+        return data;
+    }
 }
 
 //get all notes
@@ -22,6 +26,7 @@ export const getAllNotes = async(noteData) => {
         isDeleted: false
     });
     if (data) {
+        await client.set('allNotes', JSON.stringify(data));
         return data;
     }
 }
@@ -29,7 +34,10 @@ export const getAllNotes = async(noteData) => {
 //get single note
 export const getNote = async(_id) => {
     const data = await Note.findById({ _id });
-    return data;
+    if (data) {
+        await client.set('singleNote', JSON.stringify(data));
+        return data;
+    }
 };
 
 //update note
@@ -41,7 +49,12 @@ export const updateNote = async(_id, notedata) => {
             new: true
         }
     );
-    return data;
+    if (data) {
+        await client.del('allnotes');
+        await client.del('singleNote');
+        await client.set('singleNote', JSON.stringify(data));
+        return data;
+    }
 };
 
 //archieve a note
@@ -78,6 +91,8 @@ export const trashNote = async(_id, noteData) => {
 //delete a note
 export const deleteNote = async(id) => {
     await Note.findByIdAndDelete(id);
+    await client.del('singleNote')
+    await client.del('allNotes')
     return '';
 };
 
